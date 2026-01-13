@@ -1,0 +1,243 @@
+services:
+  speaches-loadbalancer:
+    image: nginx:alpine
+    container_name: speaches-loadbalancer
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./dicto-transcription-deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - speaches-gpu-0
+      - speaches-gpu-1
+      - speaches-gpu-2
+      - speaches-gpu-3
+      - speaches-gpu-4
+      - speaches-gpu-5
+      - speaches-gpu-6
+      - speaches-gpu-7
+    networks:
+      - speaches-network
+      - dicto-web
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  speaches-gpu-0:
+    extends:
+      file: ../compose.yaml
+      service: speaches
+    container_name: speaches-gpu-0
+    build:
+      args:
+        BASE_IMAGE: nvidia/cuda:12.9.1-cudnn-runtime-ubuntu24.04
+    ports: []
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['0']
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=0
+    env_file:
+      - path: .env
+        required: false
+    networks:
+      - speaches-network
+    volumes:
+      - hf-hub-cache:/home/ubuntu/.cache/huggingface/hub
+
+  speaches-gpu-1:
+    extends:
+      file: ../compose.yaml
+      service: speaches
+    container_name: speaches-gpu-1
+    build:
+      args:
+        BASE_IMAGE: nvidia/cuda:12.9.1-cudnn-runtime-ubuntu24.04
+    ports: []
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['1']
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=1
+    env_file:
+      - path: .env
+        required: false
+    networks:
+      - speaches-network
+    volumes:
+      - hf-hub-cache:/home/ubuntu/.cache/huggingface/hub
+
+  speaches-gpu-2:
+    extends:
+      file: ../compose.yaml
+      service: speaches
+    container_name: speaches-gpu-2
+    build:
+      args:
+        BASE_IMAGE: nvidia/cuda:12.9.1-cudnn-runtime-ubuntu24.04
+    ports: []
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['2']
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=2
+    env_file:
+      - path: .env
+        required: false
+    networks:
+      - speaches-network
+    volumes:
+      - hf-hub-cache:/home/ubuntu/.cache/huggingface/hub
+
+  speaches-gpu-3:
+    extends:
+      file: ../compose.yaml
+      service: speaches
+    container_name: speaches-gpu-3
+    build:
+      args:
+        BASE_IMAGE: nvidia/cuda:12.9.1-cudnn-runtime-ubuntu24.04
+    ports: []
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['3']
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=3
+    env_file:
+      - path: .env
+        required: false
+    networks:
+      - speaches-network
+    volumes:
+      - hf-hub-cache:/home/ubuntu/.cache/huggingface/hub
+
+  speaches-gpu-4:
+    extends:
+      file: ../compose.yaml
+      service: speaches
+    container_name: speaches-gpu-4
+    build:
+      args:
+        BASE_IMAGE: nvidia/cuda:12.9.1-cudnn-runtime-ubuntu24.04
+    ports: []
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['4']
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=4
+    env_file:
+      - path: .env
+        required: false
+    networks:
+      - speaches-network
+    volumes:
+      - hf-hub-cache:/home/ubuntu/.cache/huggingface/hub
+
+  speaches-gpu-5:
+    extends:
+      file: ../compose.yaml
+      service: speaches
+    container_name: speaches-gpu-5
+    build:
+      args:
+        BASE_IMAGE: nvidia/cuda:12.9.1-cudnn-runtime-ubuntu24.04
+    ports: []
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['5']
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=5
+    env_file:
+      - path: .env
+        required: false
+    networks:
+      - speaches-network
+    volumes:
+      - hf-hub-cache:/home/ubuntu/.cache/huggingface/hub
+
+  speaches-gpu-6:
+    extends:
+      file: ../compose.yaml
+      service: speaches
+    container_name: speaches-gpu-6
+    build:
+      args:
+        BASE_IMAGE: nvidia/cuda:12.9.1-cudnn-runtime-ubuntu24.04
+    ports: []
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['6']
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=6
+    env_file:
+      - path: .env
+        required: false
+    networks:
+      - speaches-network
+    volumes:
+      - hf-hub-cache:/home/ubuntu/.cache/huggingface/hub
+
+  speaches-gpu-7:
+    extends:
+      file: ../compose.yaml
+      service: speaches
+    container_name: speaches-gpu-7
+    build:
+      args:
+        BASE_IMAGE: nvidia/cuda:12.9.1-cudnn-runtime-ubuntu24.04
+    ports: []
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['7']
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=7
+    env_file:
+      - path: .env
+        required: false
+    networks:
+      - speaches-network
+    volumes:
+      - hf-hub-cache:/home/ubuntu/.cache/huggingface/hub
+
+networks:
+  speaches-network:
+    driver: bridge
+  dicto-web:
+    external: true
+
+volumes:
+  hf-hub-cache:
