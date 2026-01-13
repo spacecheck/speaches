@@ -31,7 +31,7 @@ echo ""
 
 # Copy audio file once into nginx container
 echo "Copying audio.wav to loadbalancer container..."
-if ! docker cp audio.wav speaches-loadbalancer:/tmp/audio.wav 2>&1; then
+if ! docker cp audio.wav whisper-loadbalancer:/tmp/audio.wav 2>&1; then
     echo "Error: Could not copy audio file to loadbalancer container"
     exit 1
 fi
@@ -44,7 +44,7 @@ load_model_on_gpu() {
 
     # Step 1: Load the model into GPU memory
     echo "  Loading model ${MODEL} into GPU memory..."
-    load_response=$(docker exec speaches-loadbalancer sh -c "
+    load_response=$(docker exec whisper-loadbalancer sh -c "
         curl -s -w '\nHTTP_CODE:%{http_code}' \
              -X POST \
              http://${container_name}:8000/v1/models/${MODEL}
@@ -63,7 +63,7 @@ load_model_on_gpu() {
 
     # Step 2: Verify model with test transcription
     echo "  Verifying model with test transcription..."
-    response=$(docker exec speaches-loadbalancer sh -c "
+    response=$(docker exec whisper-loadbalancer sh -c "
         curl -s -w '\nHTTP_CODE:%{http_code}' \
              http://${container_name}:8000/v1/audio/transcriptions \
              -F 'file=@/tmp/audio.wav' \
