@@ -42,7 +42,7 @@ services:
               device_ids: ['0']
               capabilities: [gpu]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=0
+      - stt_model_ttl=-1
     env_file:
       - path: .env
         required: false
@@ -68,7 +68,7 @@ services:
               device_ids: ['1']
               capabilities: [gpu]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=1
+      - stt_model_ttl=-1
     env_file:
       - path: .env
         required: false
@@ -94,7 +94,7 @@ services:
               device_ids: ['2']
               capabilities: [gpu]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=2
+      - stt_model_ttl=-1
     env_file:
       - path: .env
         required: false
@@ -120,7 +120,7 @@ services:
               device_ids: ['3']
               capabilities: [gpu]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=3
+      - stt_model_ttl=-1
     env_file:
       - path: .env
         required: false
@@ -146,7 +146,7 @@ services:
               device_ids: ['4']
               capabilities: [gpu]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=4
+      - stt_model_ttl=-1
     env_file:
       - path: .env
         required: false
@@ -172,7 +172,7 @@ services:
               device_ids: ['5']
               capabilities: [gpu]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=5
+      - stt_model_ttl=-1
     env_file:
       - path: .env
         required: false
@@ -198,7 +198,7 @@ services:
               device_ids: ['6']
               capabilities: [gpu]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=6
+      - stt_model_ttl=-1
     env_file:
       - path: .env
         required: false
@@ -224,7 +224,7 @@ services:
               device_ids: ['7']
               capabilities: [gpu]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=7
+      - stt_model_ttl=-1
     env_file:
       - path: .env
         required: false
