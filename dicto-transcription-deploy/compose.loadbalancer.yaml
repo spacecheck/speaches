@@ -1,7 +1,7 @@
 services:
   speaches-loadbalancer:
     image: nginx:alpine
-    container_name: speaches-loadbalancer
+    container_name: whisper-loadbalancer
     ports:
       - "8000:8000"
     volumes:
