@@ -1,4 +1,19 @@
-# Speaches
+# Speaches (CUDA 12.9.1 Fork)
+
+This is a fork of [speaches-ai/speaches](https://github.com/speaches-ai/speaches) made to build a CUDA 12.9.1 image.
+
+## Build and Push
+
+```bash
+# Build with CUDA 12.9.1
+docker compose build --build-arg BASE_IMAGE=nvidia/cuda:12.9.1-cudnn-runtime-ubuntu24.04
+
+# Tag and push
+docker tag speaches-speaches:latest ghcr.io/spacecheck/speaches:cuda-12.9.1
+docker push ghcr.io/spacecheck/speaches:cuda-12.9.1
+```
+
+---
 
 `speaches` is an OpenAI API-compatible server supporting streaming transcription, translation, and speech generation. Speach-to-Text is powered by [faster-whisper](https://github.com/SYSTRAN/faster-whisper) and for Text-to-Speech [piper](https://github.com/rhasspy/piper) and [Kokoro](https://huggingface.co/hexgrad/Kokoro-82M) are used. This project aims to be Ollama, but for TTS/STT models.
 
